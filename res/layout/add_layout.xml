@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <EditText android:id="@+id/main_word"
+        style="@style/fw"
+        android:singleLine="true"
+        android:inputType="text"
+        android:hint="Word"/>
+        <EditText android:id="@+id/main_meaning"
+        style="@style/fw"
+        android:singleLine="true"
+        android:inputType="text"
+        android:hint="Meaning"/>
+    <EditText android:id="@+id/main_example"
+        android:layout_width="fill_parent"
+        android:inputType="text"
+        android:gravity="left|top"
+        android:layout_height="100dp"
+        android:hint="Example"/>
+    <Button android:id="@+id/main_ok"
+        style="@style/fw"
+        android:text="OK"/>
+</LinearLayout>
