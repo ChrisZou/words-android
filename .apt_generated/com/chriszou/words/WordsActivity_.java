@@ -9,18 +9,25 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ListView;
+import com.chriszou.words.R.id;
 import com.chriszou.words.R.layout;
+import org.androidannotations.api.BackgroundExecutor;
 import org.androidannotations.api.view.HasViews;
+import org.androidannotations.api.view.OnViewChangedListener;
 import org.androidannotations.api.view.OnViewChangedNotifier;
 
 public final class WordsActivity_
     extends WordsActivity
-    implements HasViews
+    implements HasViews, OnViewChangedListener
 {
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
+    private Handler handler_ = new Handler(Looper.getMainLooper());
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,6 +39,7 @@ public final class WordsActivity_
     }
 
     private void init_(Bundle savedInstanceState) {
+        OnViewChangedNotifier.registerOnViewChangedListener(this);
     }
 
     @Override
@@ -62,6 +70,44 @@ public final class WordsActivity_
 
     public static WordsActivity_.IntentBuilder_ intent(android.support.v4.app.Fragment supportFragment) {
         return new WordsActivity_.IntentBuilder_(supportFragment);
+    }
+
+    @Override
+    public void onViewChanged(HasViews hasViews) {
+        mListView = ((ListView) hasViews.findViewById(id.main_listview));
+        loadData();
+    }
+
+    @Override
+    public void updateList() {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                WordsActivity_.super.updateList();
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void getWords() {
+        BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
+
+
+            @Override
+            public void execute() {
+                try {
+                    WordsActivity_.super.getWords();
+                } catch (Throwable e) {
+                    Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
+                }
+            }
+
+        }
+        );
     }
 
     public static class IntentBuilder_ {

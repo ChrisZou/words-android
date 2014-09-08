@@ -9,6 +9,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -26,6 +28,7 @@ public final class AddWordActivity_
 {
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
+    private Handler handler_ = new Handler(Looper.getMainLooper());
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,9 +75,9 @@ public final class AddWordActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        mExampleEdit = ((EditText) hasViews.findViewById(id.main_example));
-        mWordEdit = ((EditText) hasViews.findViewById(id.main_word));
         mMeaningEdit = ((EditText) hasViews.findViewById(id.main_meaning));
+        mWordEdit = ((EditText) hasViews.findViewById(id.main_word));
+        mExampleEdit = ((EditText) hasViews.findViewById(id.main_example));
         {
             View view = hasViews.findViewById(id.main_ok);
             if (view!= null) {
@@ -90,6 +93,21 @@ public final class AddWordActivity_
                 );
             }
         }
+        loadData();
+    }
+
+    @Override
+    public void onAddingResult(final int resultCode) {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                AddWordActivity_.super.onAddingResult(resultCode);
+            }
+
+        }
+        );
     }
 
     @Override

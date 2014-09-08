@@ -3,12 +3,17 @@
  */
 package com.chriszou.words;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.widget.EditText;
 
 /**
@@ -26,6 +31,14 @@ public class AddWordActivity extends Activity {
 
 	@ViewById(R.id.main_example)
 	EditText mExampleEdit;
+    
+	@AfterViews
+	void loadData() {
+		ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+		ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+		String pasteData = item.getText().toString();
+        mExampleEdit.setText(pasteData);
+	}
 
 	@Click(R.id.main_ok)
 	void addWord() {
@@ -41,7 +54,15 @@ public class AddWordActivity extends Activity {
 	@Background
 	void executeAdd(String word, String meaning, String example) {
 		WordModel model = new WordModel();
-		model.addWord(word, meaning, example);
+		int result = model.addWord(word, meaning, example);
+        onAddingResult(result);
+	}
+    
+	@UiThread
+	void onAddingResult(int resultCode) {
+		if(resultCode==201) {
+			finish();
+		}
 	}
 
 }

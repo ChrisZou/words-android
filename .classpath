@@ -10,5 +10,7 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="/Users/zouyong/code/workspace/androidlibs/libs/androidannotations-api-3.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/zouyong/code/workspace/androidlibs/libs/gson-2.2.4.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

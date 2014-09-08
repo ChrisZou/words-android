@@ -15,9 +15,10 @@
         android:hint="Meaning"/>
     <EditText android:id="@+id/main_example"
         android:layout_width="fill_parent"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         android:gravity="left|top"
         android:layout_height="100dp"
+        android:singleLine="false"
         android:hint="Example"/>
     <Button android:id="@+id/main_ok"
         style="@style/fw"
