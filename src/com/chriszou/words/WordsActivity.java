@@ -13,11 +13,6 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
-import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,8 +22,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.chriszou.androidlibs.BaseViewBinderAdapter;
-import com.chriszou.androidlibs.Notifier;
 import com.chriszou.androidlibs.BaseViewBinderAdapter.ViewBinder;
+import com.chriszou.androidlibs.Notifier;
 
 /**
  * @author Chris
@@ -64,7 +59,7 @@ public class WordsActivity extends Activity {
     private void addNotification(String title, String text) {
     	Notifier notifier = new Notifier(this);
         notifier.setOnGoing(true);
-        notifier.fireActivity(R.drawable.words, title, text, getClass());
+		notifier.fireActivity(R.drawable.words, title, text, AddWordActivity_.class);
     }
     
     @Background

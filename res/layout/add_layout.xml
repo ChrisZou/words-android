@@ -2,25 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical" >
-    <EditText android:id="@+id/main_word"
+
+    <RelativeLayout style="@style/fw" >
+    <EditText
+        android:id="@+id/main_word"
+        style="@style/add_word_edit"
+        android:hint="Word" />
+    <ImageButton 
+	    android:id="@+id/add_clear_title"
+	    style="@style/add_clear_button"
+	    />
+</RelativeLayout>
+    <EditText
+        android:id="@+id/main_meaning"
+        style="@style/add_word_edit"
+        android:hint="Meaning" />
+
+    <RelativeLayout style="@style/fw" >
+
+        <EditText
+            android:id="@+id/main_example"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:gravity="left|top"
+            android:hint="Example"
+            android:inputType="textMultiLine"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:singleLine="false" />
+        <ImageButton 
+            android:id="@+id/add_clear_example"
+            style="@style/add_clear_button"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/main_ok"
         style="@style/fw"
-        android:singleLine="true"
-        android:inputType="text"
-        android:hint="Word"/>
-        <EditText android:id="@+id/main_meaning"
-        style="@style/fw"
-        android:singleLine="true"
-        android:inputType="text"
-        android:hint="Meaning"/>
-    <EditText android:id="@+id/main_example"
-        android:layout_width="fill_parent"
-        android:inputType="textMultiLine"
-        android:gravity="left|top"
-        android:layout_height="100dp"
-        android:singleLine="false"
-        android:hint="Example"/>
-    <Button android:id="@+id/main_ok"
-        style="@style/fw"
-        android:text="OK"/>
+        android:text="OK" />
+
 </LinearLayout>

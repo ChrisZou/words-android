@@ -7,6 +7,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.FocusChange;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
@@ -14,6 +15,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.view.View;
 import android.widget.EditText;
 
 /**
@@ -34,9 +36,7 @@ public class AddWordActivity extends Activity {
     
 	@AfterViews
 	void loadData() {
-		ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-		ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
-		String pasteData = item.getText().toString();
+		String pasteData = getClipboard();
         mExampleEdit.setText(pasteData);
 	}
 
@@ -45,9 +45,25 @@ public class AddWordActivity extends Activity {
 		String word = mWordEdit.getText().toString();
 		String meaning = mMeaningEdit.getText().toString();
 		String example = mExampleEdit.getText().toString();
-
 		if (word.length() > 0 && meaning.length() > 0 && example.length() > 0) {
 			executeAdd(word, meaning, example);
+		}
+	}
+	
+	@Click(R.id.add_clear_example)
+	void clearExample() {
+		mExampleEdit.setText("");
+	}
+
+	@Click(R.id.add_clear_title)
+	void clearTitle() {
+		mWordEdit.setText("");
+	}
+
+	@FocusChange(R.id.main_word)
+	void onTitleEditFocus(View view, boolean focused) {
+		if (focused) {
+			mWordEdit.setText(getClipboard());
 		}
 	}
 
@@ -63,6 +79,13 @@ public class AddWordActivity extends Activity {
 		if(resultCode==201) {
 			finish();
 		}
+	}
+
+	private String getClipboard() {
+		ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+		ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+		String pasteData = item.getText().toString();
+		return pasteData;
 	}
 
 }
