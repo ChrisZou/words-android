@@ -3,6 +3,7 @@
  */
 package com.chriszou.words;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.androidannotations.annotations.AfterViews;
@@ -41,6 +42,9 @@ public class WordsActivity extends Activity {
     @ViewById(R.id.main_listview)
     ListView mListView;
     
+    @ViewById(R.id.main_emptyView)
+    TextView mEmptyView;
+    
     ViewBinder<Word> mViewBinder = new BaseViewBinderAdapter.ViewBinder<Word>() {
 		@Override
 		public void bindView(int position, View view, Word item, ViewGroup parent) {
@@ -65,18 +69,35 @@ public class WordsActivity extends Activity {
     
     @Background
     void getWords() {
-    	mWords = new WordModel().getWords();
-        updateList();
-        
-        if(mWords.size()>0) {
-        	addNotification(mWords.get(0).title, mWords.get(0).meaning);
-        }
+    	try {
+			mWords = new WordModel().getWords();
+            updateList();
+		} catch (IOException e) {
+			e.printStackTrace();
+            notifyError("Error connecting to server.");
+		}
+    }
+    
+    @UiThread
+    void notifyError(String text) {
+        mEmptyView.setVisibility(View.VISIBLE);
+    	mEmptyView.setText(text);
+    }
+    
+    void hideError() {
+    	mEmptyView.setVisibility(View.GONE);
     }
     
     @UiThread
     void updateList() {
-    	BaseViewBinderAdapter<Word> adapter = new BaseViewBinderAdapter<Word>(this, mWords, R.layout.word_item, mViewBinder);
-        mListView.setAdapter(adapter);
+        if(mWords.size()>0) {
+        	BaseViewBinderAdapter<Word> adapter = new BaseViewBinderAdapter<Word>(this, mWords, R.layout.word_item, mViewBinder);
+            mListView.setAdapter(adapter);
+        	addNotification(mWords.get(0).title, mWords.get(0).meaning);
+            hideError();
+        } else {
+        	notifyError("Seems you don't have any word yet, click add to add one.");
+        }
     }
     
 	@Override

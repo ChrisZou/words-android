@@ -3,7 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <ListView android:id="@+id/main_listview"
-        style="@style/fw"
-        />
+
+    <ListView
+        android:id="@+id/main_listview"
+        style="@style/fw" />
+
+    <TextView android:id="@+id/main_emptyView"
+        style="@style/ff"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:text="Loading data..." />
+
 </LinearLayout>

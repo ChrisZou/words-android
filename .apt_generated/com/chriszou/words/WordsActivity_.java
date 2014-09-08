@@ -14,6 +14,7 @@ import android.os.Looper;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ListView;
+import android.widget.TextView;
 import com.chriszou.words.R.id;
 import com.chriszou.words.R.layout;
 import org.androidannotations.api.BackgroundExecutor;
@@ -75,6 +76,7 @@ public final class WordsActivity_
     @Override
     public void onViewChanged(HasViews hasViews) {
         mListView = ((ListView) hasViews.findViewById(id.main_listview));
+        mEmptyView = ((TextView) hasViews.findViewById(id.main_emptyView));
         loadData();
     }
 
@@ -86,6 +88,20 @@ public final class WordsActivity_
             @Override
             public void run() {
                 WordsActivity_.super.updateList();
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void notifyError(final String text) {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                WordsActivity_.super.notifyError(text);
             }
 
         }

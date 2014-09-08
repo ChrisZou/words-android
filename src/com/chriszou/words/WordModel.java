@@ -15,6 +15,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,16 +31,11 @@ import com.chriszou.androidlibs.UrlContentLoader;
  */
 public class WordModel {
     private static final String SERVER_URL = "http://woaifuxi.com:3006/words.json";
-	public List<Word> getWords() {
-        try {
-            UrlContentLoader loader = new UrlContentLoader(SERVER_URL);
-			String jsonString = loader.executeSync();
-            List<Word> words = jsonStringToList(jsonString);
-            return words;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        return Collections.emptyList();
+	public List<Word> getWords() throws IOException {
+        UrlContentLoader loader = new UrlContentLoader(SERVER_URL);
+		String jsonString = loader.executeSync();
+        List<Word> words = jsonStringToList(jsonString);
+        return words;
 	}
 	
 	public void addWord(Word word) {
@@ -59,7 +57,10 @@ public class WordModel {
 			String data = w.toJson();
 			L.l("data: " + data);
 			post.setEntity(new StringEntity(data, "UTF-8"));
-			HttpClient client = new DefaultHttpClient();
+			HttpParams params = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(params, 5*1000);
+            HttpConnectionParams.setSoTimeout(params, 5*1000);
+			DefaultHttpClient client = new DefaultHttpClient(params);
 			HttpResponse response = client.execute(post);
             StatusLine status = response.getStatusLine();
             L.l("status: "+status.getStatusCode());
