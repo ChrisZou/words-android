@@ -20,6 +20,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.preference.PreferenceManager;
+
 import com.chriszou.androidlibs.L;
 import com.chriszou.androidlibs.UrlContentLoader;
 
@@ -28,10 +31,15 @@ import com.chriszou.androidlibs.UrlContentLoader;
  *
  */
 public class WordModel {
+	public Context mContext;
+	public WordModel(Context context) {
+		mContext = context;
+	}
 	private static final String SERVER_URL = "http://woaifuxi.com:3006/words.json";
 	public List<Word> getWords() throws IOException {
 		UrlContentLoader loader = new UrlContentLoader(SERVER_URL);
 		String jsonString = loader.executeSync();
+		saveCache(jsonString);
 		List<Word> words = jsonStringToList(jsonString);
 		return words;
 	}
@@ -71,6 +79,10 @@ public class WordModel {
 		return 0;
 	}
 
+	public static final String PREF_STRING_CACHE = "pref_string_cache";
+	private void saveCache(String jsonString) {
+		PreferenceManager.getDefaultSharedPreferences(mContext).edit().putString(PREF_STRING_CACHE, jsonString).commit();
+	}
 	private static List<Word> jsonStringToList(String jsonString) {
 		List<Word> words = new ArrayList<Word>();
 		try {
@@ -89,5 +101,18 @@ public class WordModel {
 
 		return words;
 
+	}
+
+	/**
+	 * Get the cached data
+	 * @return
+	 */
+	public List<Word> getCache() {
+		List<Word> words = new ArrayList<Word>();
+		String jsonString = PreferenceManager.getDefaultSharedPreferences(mContext).getString(PREF_STRING_CACHE, null);
+		if(jsonString!=null) {
+			words = jsonStringToList(jsonString);
+		}
+		return words;
 	}
 }

@@ -69,7 +69,7 @@ public class AddWordActivity extends Activity {
 
 	@Background
 	void executeAdd(String word, String meaning, String example) {
-		WordModel model = new WordModel();
+		WordModel model = new WordModel(this);
 		int result = model.addWord(word, meaning, example);
 		onAddingResult(result);
 	}
