@@ -33,11 +33,11 @@ public class AddWordActivity extends Activity {
 
 	@ViewById(R.id.main_example)
 	EditText mExampleEdit;
-    
+
 	@AfterViews
 	void loadData() {
 		String pasteData = getClipboard();
-        mExampleEdit.setText(pasteData);
+		mExampleEdit.setText(pasteData);
 	}
 
 	@Click(R.id.main_ok)
@@ -49,7 +49,7 @@ public class AddWordActivity extends Activity {
 			executeAdd(word, meaning, example);
 		}
 	}
-	
+
 	@Click(R.id.add_clear_example)
 	void clearExample() {
 		mExampleEdit.setText("");
@@ -71,9 +71,9 @@ public class AddWordActivity extends Activity {
 	void executeAdd(String word, String meaning, String example) {
 		WordModel model = new WordModel();
 		int result = model.addWord(word, meaning, example);
-        onAddingResult(result);
+		onAddingResult(result);
 	}
-    
+
 	@UiThread
 	void onAddingResult(int resultCode) {
 		if(resultCode==201) {
@@ -84,7 +84,7 @@ public class AddWordActivity extends Activity {
 	private String getClipboard() {
 		ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 		ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
-		String pasteData = item.getText().toString();
+		String pasteData = item.getText().toString().trim();
 		return pasteData;
 	}
 
