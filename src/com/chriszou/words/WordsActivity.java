@@ -54,6 +54,7 @@ public class WordsActivity extends Activity {
 	void loadData() {
 		addNotification("Add a word", "Add a word");
 		mWords = new WordModel(this).getCache();
+		updateList();
 		getWords();
 	}
 

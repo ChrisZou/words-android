@@ -16,6 +16,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 /**
@@ -34,6 +35,9 @@ public class AddWordActivity extends Activity {
 	@ViewById(R.id.main_example)
 	EditText mExampleEdit;
 
+	@ViewById(R.id.main_ok)
+	Button mOkButton;
+
 	@AfterViews
 	void loadData() {
 		String pasteData = getClipboard();
@@ -46,6 +50,7 @@ public class AddWordActivity extends Activity {
 		String meaning = mMeaningEdit.getText().toString();
 		String example = mExampleEdit.getText().toString();
 		if (word.length() > 0 && meaning.length() > 0 && example.length() > 0) {
+			mOkButton.setEnabled(false);
 			executeAdd(word, meaning, example);
 		}
 	}
@@ -76,6 +81,7 @@ public class AddWordActivity extends Activity {
 
 	@UiThread
 	void onAddingResult(int resultCode) {
+		mOkButton.setEnabled(true);
 		if(resultCode==201) {
 			finish();
 		}

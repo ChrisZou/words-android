@@ -39,7 +39,11 @@ public class WordModel {
 	public List<Word> getWords() throws IOException {
 		UrlContentLoader loader = new UrlContentLoader(SERVER_URL);
 		String jsonString = loader.executeSync();
-		saveCache(jsonString);
+
+		if(jsonString.length()>0) {
+			saveCache(jsonString);
+		}
+
 		List<Word> words = jsonStringToList(jsonString);
 		return words;
 	}
