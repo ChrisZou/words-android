@@ -3,6 +3,8 @@
  */
 package com.chriszou.words;
 
+import java.io.Serializable;
+
 import com.google.gson.Gson;
 
 
@@ -10,7 +12,10 @@ import com.google.gson.Gson;
  * @author Chris
  *
  */
-public class Word {
+public class Word implements Serializable{
+	private static final long serialVersionUID = 1L;
+
+	public String id;
 	public String title;
 	public String meaning;
 	public String example;

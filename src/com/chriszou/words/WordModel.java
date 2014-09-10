@@ -36,6 +36,11 @@ public class WordModel {
 		mContext = context;
 	}
 	private static final String SERVER_URL = "http://woaifuxi.com:3006/words.json";
+	/**
+	 * Get words from web server synchronized, should call this method in background thread
+	 * @return
+	 * @throws IOException
+	 */
 	public List<Word> getWords() throws IOException {
 		UrlContentLoader loader = new UrlContentLoader(SERVER_URL);
 		String jsonString = loader.executeSync();

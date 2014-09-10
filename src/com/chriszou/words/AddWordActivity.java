@@ -19,6 +19,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.chriszou.androidlibs.Toaster;
+
 /**
  * @author Chris
  *
@@ -84,6 +86,8 @@ public class AddWordActivity extends Activity {
 		mOkButton.setEnabled(true);
 		if(resultCode==201) {
 			finish();
+		} else {
+			Toaster.s(this, "Connection failed");
 		}
 	}
 

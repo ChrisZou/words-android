@@ -18,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -56,6 +58,13 @@ public class WordsActivity extends Activity {
 		mWords = new WordModel(this).getCache();
 		updateList();
 		getWords();
+
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				startActivity(new Intent(WordsActivity.this, ReviewActivity_.class));
+			}
+		});
 	}
 
 	private void addNotification(String title, String text) {
