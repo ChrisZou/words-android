@@ -14,16 +14,18 @@
         android:gravity="center"
         android:textSize="28sp"
         android:padding="10dp"
-        android:singleLine="true" />
-
+        android:singleLine="true"
+        android:textColor="#FF0000"
+        android:text="title" />
     <TextView
         android:id="@+id/review_meaning"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:gravity="center"
-        android:singleLine="true" />
-
+        android:singleLine="true"
+        android:textColor="#008000"
+        android:text="" />
     <TextView
         android:id="@+id/review_example"
         android:layout_width="fill_parent"
@@ -31,6 +33,14 @@
         android:textSize="17sp"
         android:gravity="center"
         android:padding="10dp"
+        android:text="example"
         android:singleLine="false" />
 
+    <View android:layout_width="1px"
+        android:layout_height="0dp" 
+        android:layout_weight="1"/>
+    <TextView android:id="@+id/review_count"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
 </LinearLayout>

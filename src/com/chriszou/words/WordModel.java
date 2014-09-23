@@ -25,6 +25,7 @@ import android.preference.PreferenceManager;
 
 import com.chriszou.androidlibs.L;
 import com.chriszou.androidlibs.UrlContentLoader;
+import com.google.gson.Gson;
 
 /**
  * @author Chris
@@ -73,8 +74,8 @@ public class WordModel {
 			L.l("data: " + data);
 			post.setEntity(new StringEntity(data, "UTF-8"));
 			HttpParams params = new BasicHttpParams();
-			HttpConnectionParams.setConnectionTimeout(params, 5*1000);
-			HttpConnectionParams.setSoTimeout(params, 5*1000);
+			HttpConnectionParams.setConnectionTimeout(params, 3*1000);
+			HttpConnectionParams.setSoTimeout(params, 3*1000);
 			DefaultHttpClient client = new DefaultHttpClient(params);
 			HttpResponse response = client.execute(post);
 			StatusLine status = response.getStatusLine();
@@ -98,10 +99,11 @@ public class WordModel {
 			JSONArray array = new JSONArray(jsonString);
 			for(int i=0; i<array.length(); i++) {
 				JSONObject wordJson = array.optJSONObject(i);
-				Word word = new Word();
-				word.title = wordJson.optString("title");
-				word.meaning = wordJson.optString("meaning");
-				word.example = wordJson.optString("example");
+				//				Word word = new Word();
+				//				word.title = wordJson.optString("title");
+				//				word.meaning = wordJson.optString("meaning");
+				//				word.example = wordJson.optString("example");
+				Word word = new Gson().fromJson(wordJson.toString(), Word.class);
 				words.add(word);
 			}
 		} catch (JSONException e) {

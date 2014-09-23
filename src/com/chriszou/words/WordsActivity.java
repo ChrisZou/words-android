@@ -42,6 +42,9 @@ public class WordsActivity extends Activity {
 	@ViewById(R.id.main_emptyView)
 	TextView mEmptyView;
 
+	@ViewById(R.id.countView)
+	TextView mCountView;
+
 	ViewBinder<Word> mViewBinder = new BaseViewBinderAdapter.ViewBinder<Word>() {
 		@Override
 		public void bindView(int position, View view, Word item, ViewGroup parent) {
@@ -62,7 +65,9 @@ public class WordsActivity extends Activity {
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				startActivity(new Intent(WordsActivity.this, ReviewActivity_.class));
+				Intent intent = new Intent(WordsActivity.this, ReviewActivity_.class);
+				intent.putExtra(ReviewActivity.EXTRA_STRING_WORD_ID, mWords.get(position).id);
+				startActivity(intent);
 			}
 		});
 	}
@@ -104,6 +109,8 @@ public class WordsActivity extends Activity {
 		} else {
 			notifyError("Seems you don't have any word yet, click add to add one.");
 		}
+
+		mCountView.setText(mWords.size()+" words");
 	}
 
 	@Override

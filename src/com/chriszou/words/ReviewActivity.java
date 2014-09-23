@@ -19,8 +19,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.chriszou.androidlibs.L;
-
 /**
  * @author zouyong
  *
@@ -52,24 +50,13 @@ public class ReviewActivity extends   FragmentActivity  {
 
 		mPagerAdapter = new WordsPagerAdapter(getSupportFragmentManager());
 		mPager.setAdapter(mPagerAdapter);
+		mPager.setCurrentItem(start);
 	}
 
 	/**
 	 * The pager adapter, which provides the pages to the view pager widget.
 	 */
 	private PagerAdapter mPagerAdapter;
-
-	@Override
-	public void onBackPressed() {
-		if (mPager.getCurrentItem() == 0) {
-			// If the user is currently looking at the first step, allow the system to handle the
-			// Back button. This calls finish() on this activity and pops the back stack.
-			super.onBackPressed();
-		} else {
-			// Otherwise, select the previous step.
-			mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-		}
-	}
 
 	/**
 	 * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
@@ -86,8 +73,9 @@ public class ReviewActivity extends   FragmentActivity  {
 			WordPageFragment_ fragment = new WordPageFragment_();
 			Bundle args = new Bundle();
 			args.putSerializable(WordPageFragment.EXTRA_SERIAL_WORD, word);
+			args.putInt(WordPageFragment.EXTRA_INT_count, mWords.size());
+			args.putInt(WordPageFragment.EXTRA_INT_INDEX, position);
 			fragment.setArguments(args);
-			L.l("get item "+position);
 			return fragment;
 		}
 
