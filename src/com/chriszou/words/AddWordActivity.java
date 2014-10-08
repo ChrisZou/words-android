@@ -92,9 +92,15 @@ public class AddWordActivity extends Activity {
 	}
 
 	private String getClipboard() {
-		ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-		ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
-		String pasteData = item.getText().toString().trim();
+		String pasteData = "";
+		try {
+			ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+			ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+			pasteData = item.getText().toString().trim();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
 		return pasteData;
 	}
 
