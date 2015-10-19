@@ -5,15 +5,15 @@
  */
 package com.chriszou.words;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+
+import com.chriszou.androidlibs.Prefs;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-
-import com.chriszou.androidlibs.Prefs;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author zouyong
@@ -49,28 +49,15 @@ public class QuickReviewActivity extends ReviewActivity implements OnPageChangeL
 		getViewPager().setOnPageChangeListener(this);
 	}
 
-	/* (non-Javadoc)
-	 * @see android.support.v4.view.ViewPager.OnPageChangeListener#onPageScrollStateChanged(int)
-	 */
 	@Override
-	public void onPageScrollStateChanged(int state) {
-	}
+	public void onPageScrollStateChanged(int state) { }
 
-	/* (non-Javadoc)
-	 * @see android.support.v4.view.ViewPager.OnPageChangeListener#onPageScrolled(int, float, int)
-	 */
 	@Override
-	public void onPageScrolled(int arg0, float arg1, int arg2) {
-	}
+	public void onPageScrolled(int arg0, float arg1, int arg2) { }
 
-	/* (non-Javadoc)
-	 * @see android.support.v4.view.ViewPager.OnPageChangeListener#onPageSelected(int)
-	 */
 	@Override
 	public void onPageSelected(int arg0) {
-		if(arg0==QUICK_REVIEW_COUNT) {
-			finish();
-		}
+		if(arg0==QUICK_REVIEW_COUNT) finish();
 	}
 
 }
